@@ -26,6 +26,7 @@ namespace WSTWeb.API.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            //宋喜燕123
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
