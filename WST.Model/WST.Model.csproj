@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WST_Area.cs" />
     <Compile Include="WST_Article_management.cs" />
+    <Compile Include="WST_BlackList.cs" />
+    <Compile Include="WST_Complaint.cs" />
     <Compile Include="WST_Department.cs" />
     <Compile Include="WST_Detial_Pro.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
