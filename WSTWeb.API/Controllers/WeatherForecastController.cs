@@ -9,6 +9,7 @@ namespace WSTWeb.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    //是大鹏哟
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -26,6 +27,7 @@ namespace WSTWeb.API.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            //宋喜燕123
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
