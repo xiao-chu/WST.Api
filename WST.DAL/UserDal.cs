@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WST.DAL
 {
-    public class Class1
+    public class UserDal
     {
 
     }
