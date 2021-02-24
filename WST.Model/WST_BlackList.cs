@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WST.Model
 {
+    //黑名单
     public class WST_BlackList
     {
         public int Bid { get; set; }               //序号

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WST.Model
 {
+    //地区表
     public class WST_Area
     {
         public int Aid		 { get; set; }  //主键

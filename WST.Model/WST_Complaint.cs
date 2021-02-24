@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WST.Model
 {
+    //投诉表
     public class WST_Complaint
     {
         public int Cid { get; set; }                      //序号
