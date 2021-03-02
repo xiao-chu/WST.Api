@@ -50,6 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WST_Jurisdiction.cs" />
     <Compile Include="WST_LinkList.cs" />
+    <Compile Include="WST_Questionnaire.cs" />
     <Compile Include="WST_Role.cs" />
     <Compile Include="WST_Role_Jurisdiction.cs" />
     <Compile Include="WST_Scroll_Picture.cs" />
