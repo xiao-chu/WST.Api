@@ -13,7 +13,7 @@ namespace WST.Model
         public string Sprograma { get; set; }      // 栏目
         public string Stitle { get; set; }         // 图片标题
         public string Scontent { get; set; }       // 图片内容
-        public bool Sstate { get; set; }           // 图片状态
+        public int Sstate { get; set; }           // 图片状态
         public string Simg { get; set; }           // 图片
         public string Slink { get; set; }          // 图片链接
         public DateTime Stime { get; set; }        // 图片更新的时间

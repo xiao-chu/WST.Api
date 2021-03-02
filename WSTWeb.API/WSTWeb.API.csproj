@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
@@ -14,6 +14,15 @@
   <ItemGroup>
     <ProjectReference Include="..\WST.DAL\WST.DAL.csproj" />
     <ProjectReference Include="..\WST.Model\WST.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:\Users\Dell\Desktop\第三方控件\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Webdiyer.MvcPager">
+      <HintPath>C:\Users\Dell\Desktop\第三方控件\MvcPager\Webdiyer.MvcPager.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

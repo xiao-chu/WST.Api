@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArticleDal.cs" />
+    <Compile Include="LinkListDal.cs" />
     <Compile Include="QuestionnaireDal.cs" />
     <Compile Include="UserDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

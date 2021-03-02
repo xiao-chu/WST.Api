@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+ï»¿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +23,7 @@ namespace WSTWeb.API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        [Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -31,18 +32,23 @@ namespace WSTWeb.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WSTWeb.API", Version = "v1" });
             });
-            //Ìí¼Ócors ·þÎñ ÅäÖÃ¿çÓò´¦Àí                       
+
+            //æ·»åŠ cors æœåŠ¡ é…ç½®è·¨åŸŸå¤„ç†            
             services.AddCors(options =>
             {
-                options.AddPolicy("any", policy =>
+                options.AddPolicy("any", builder =>
                 {
-                    // Éè¶¨ÔÊÐí¿çÓòµÄÀ´Ô´£¬ÓÐ¶à¸ö¿ÉÒÔÓÃ','¸ô¿ª
-                    policy.WithOrigins("http://localhost:51813")//Ö»ÔÊÐíhttps://localhost:5000À´Ô´ÔÊÐí¿çÓò
+                    // è®¾å®šå…è®¸è·¨åŸŸçš„æ¥æºï¼Œæœ‰å¤šä¸ªå¯ä»¥ç”¨','éš”å¼€
+                    builder.WithOrigins("http://localhost:51813")//åªå…è®¸https://localhost:5000æ¥æºå…è®¸è·¨åŸŸ
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
                 });
             });
+
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,10 +62,16 @@ namespace WSTWeb.API
             }
 
             app.UseRouting();
-            //ÅäÖÃCors
+            //ï¿½ï¿½ï¿½ï¿½Cors
             app.UseCors("any");
 
             app.UseAuthorization();
+
+            //ï¿½ï¿½ï¿½ï¿½Cors
+            app.UseCors("any");
+
+            app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
