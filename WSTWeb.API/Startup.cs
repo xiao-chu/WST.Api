@@ -31,6 +31,20 @@ namespace WSTWeb.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WSTWeb.API", Version = "v1" });
             });
+            //添加cors 服务 配置跨域处理            
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("any", policy =>
+                {
+                    // 设定允许跨域的来源，有多个可以用','隔开
+                    policy.WithOrigins("http://localhost:51813")//只允许https://localhost:5000来源允许跨域
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +58,8 @@ namespace WSTWeb.API
             }
 
             app.UseRouting();
-
+            //配置Cors
+            app.UseCors("any");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
