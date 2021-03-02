@@ -14,7 +14,7 @@ namespace WST.Model
         public string URL { get; set; }      //URL地址
         public string LType { get; set; }    //类型
         public int Lsort { get; set; }       //int排序号
-        public bool Show { get; set; }       //是否显示	
+        public int Show { get; set; }       //是否显示	
         public string Sites { get; set; }    //站点	
         public string Remark { get; set; }   //备注
     }
