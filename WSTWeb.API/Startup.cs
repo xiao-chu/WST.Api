@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+锘縰sing Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WST.Model;
+using WST.DAL;
 
 namespace WSTWeb.API
 {
@@ -23,33 +25,53 @@ namespace WSTWeb.API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        [Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
+            //娣诲姞cors 鏈嶅姟 閰嶇疆璺ㄥ煙澶勭悊            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("any", builder =>
+                {
+                    builder.WithOrigins("http://localhost:51813")//鍙厑璁竓ttps://localhost:5000鏉ユ簮鍏佽璺ㄥ煙
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+
+                });
+            });
+
+            services.AddSingleton<BlackListDal>();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WSTWeb.API", Version = "v1" });
             });
-            //添加cors 服务 配置跨域处理            
 
+            //娣诲姞cors 鏈嶅姟 閰嶇疆璺ㄥ煙澶勭悊            
             services.AddCors(options =>
             {
-                options.AddPolicy("any", policy =>
+                options.AddPolicy("any", builder =>
                 {
-                    // 设定允许跨域的来源，有多个可以用','隔开
-                    policy.WithOrigins("http://localhost:51813")//只允许https://localhost:5000来源允许跨域
+                    // 璁惧畾鍏佽璺ㄥ煙鐨勬潵婧愶紝鏈夊涓彲浠ョ敤','闅斿紑
+                    builder.WithOrigins("http://localhost:51813")//鍙厑璁竓ttps://localhost:5000鏉ユ簮鍏佽璺ㄥ煙
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
                 });
             });
 
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,9 +80,16 @@ namespace WSTWeb.API
             }
 
             app.UseRouting();
-            //配置Cors
+            //锟斤拷锟斤拷Cors
             app.UseCors("any");
+
             app.UseAuthorization();
+
+            //锟斤拷锟斤拷Cors
+            app.UseCors("any");
+
+            app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
