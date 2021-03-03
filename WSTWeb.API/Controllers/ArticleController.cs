@@ -7,6 +7,7 @@ using WST.DAL;
 using WST.Model;
 using System.IO;
 using WSTWeb.API.Models;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WSTWeb.API.Controllers
 {
@@ -15,6 +16,12 @@ namespace WSTWeb.API.Controllers
     [ApiController]
     public class ArticleController : ControllerBase
     {
+        //依赖注入  IHostingEnvironment主机环境
+        private readonly IHostingEnvironment hostingEnvironment;
+        public ArticleController(IHostingEnvironment _hostingEnvironment)
+        {
+            hostingEnvironment = _hostingEnvironment;
+        }
         //实例化DAL
         ArticleDal dal = new ArticleDal();
         //分页显示
@@ -37,7 +44,7 @@ namespace WSTWeb.API.Controllers
 
         //新增
         [HttpPost]
-        public ObjectResult Create(WST_Article_management w)
+        public ObjectResult Create(WST_Article_management w, IFormFile formfile)
         {
             if (ModelState.IsValid)
             {
@@ -46,7 +53,7 @@ namespace WSTWeb.API.Controllers
                 w.Release_time = DateTime.Now;  //审核时间
                 w.Comment = 1;         //是否评论
                 w.AType = "正常";
-                //Uopate(formFile, path);
+                UploadImg(formfile);
                 var data = dal.AddArticle(w);
                 if (data > 0)
                 {
@@ -79,15 +86,44 @@ namespace WSTWeb.API.Controllers
             return Ok(new { code = -1, msg = "修改失败" });
         }
 
-        //[HttpPost]
-        //[Route("[action]")]
-        //public ObjectResult Uopate(IFormFile formFile)
-        //{
-        //    if (formFile.Length>0&& formFile != null)
-        //    {
-        //        string filePath =Guid.NewGuid()+Path.GetExtension(formFile.FileName);
+        //图片上传
+        [Route("[action]")]
+        [HttpPost]
+        public ObjectResult UploadImg(IFormFile formfile)
+        {
+            //获取文件
+            var files = Request.Form.Files;
 
-        //    }
-        //}
+            //文件是否上传
+            if (files.Count == 0)
+            {
+                return Ok($"图片未上传，请上传文件");
+            }
+            //获取文件名
+            var filePath = formfile.FileName;
+
+            string fileExt = Path.GetExtension(filePath);//获取后缀名
+            //随机生成新的文件名
+            var newFileName = Guid.NewGuid().ToString() + fileExt;
+
+            //获取主机根路径+Upload路径
+            var path = Path.Combine(hostingEnvironment.ContentRootPath, "aa");
+
+            if (!Directory.Exists(path))//查询目录是否存在
+            {
+                Directory.CreateDirectory(path.ToString());//创建目录
+            }
+
+            //完整的文件路径
+            var completeFilePath = Path.Combine(path, newFileName);
+            //保存文件
+            using (var stream = new FileStream(completeFilePath, FileMode.Create))
+            {
+                formfile.CopyToAsync(stream);
+                stream.Flush();
+            }
+            //
+            return Ok("上传成功");
+        }
     }
 }
