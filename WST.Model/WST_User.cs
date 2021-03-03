@@ -20,6 +20,9 @@ namespace WST.Model
         public DateTime User_CreateTime	 { get; set; }          //--创建时间
         public string User_Realname	 { get; set; }          //--真实姓名
         public int Department_Id { get; set; }              //--部门ID
+        //所需额外字段
+        public string Department_Name { get; set; }
+        public string Role_Name { get; set; }
 
     }
 }
