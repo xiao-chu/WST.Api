@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//使用Dapper
 using Dapper;
 using WST.Model;
 
@@ -53,8 +54,17 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"update WST_Scroll_Picture set Sprograma='{s.Sprograma}',Stitle='{s.Stitle}',Scontent='{s.Scontent}',Sstate='{s.Sstate}',Simg='{s.Simg}',Slink='{s.Slink}',Stime='{s.Stime}' where Sid='{s.Sid}'";
-                return conn.Execute(sql);
+                string sql = $"update WST_Scroll_Picture set Sprograma=@Sprograma,Stitle=@Stitle,Scontent=@Scontent,Sstate=@Sstate,Simg=@Simg,Slink=@Slink,Stime=@Stime where Sid=@Sid";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Sid", s.Sid, DbType.Int32);
+                paras.Add("@Sprograma", s.Sprograma, DbType.String);
+                paras.Add("@Stitle", s.Stitle, DbType.String);
+                paras.Add("@Scontent", s.Scontent, DbType.String);
+                paras.Add("@Sstate", s.Sstate, DbType.Int32);
+                paras.Add("@Simg", s.Simg, DbType.String);
+                paras.Add("@Slink", s.Slink, DbType.String);
+                paras.Add("@Stime", s.Stime, DbType.DateTime);
+                return conn.Execute(sql, paras);
             }
         }
         #endregion
@@ -64,8 +74,10 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"delete from WST_Scroll_Picture where Sid='{Sid}'";
-                return conn.Execute(sql);
+                string sql = $"delete from WST_Scroll_Picture where Sid=@Sid";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Sid", Sid, DbType.Int32);
+                return conn.Execute(sql,paras);
             }
         }
         #endregion
@@ -75,8 +87,16 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"insert into WST_Scroll_Picture values ('{s.Sprograma}','{s.Stitle}','{s.Scontent}','{s.Sstate}','{s.Simg}','{s.Slink}','{s.Stime}')";
-                return conn.Execute(sql);
+                string sql = "insert into WST_Scroll_Picture values (@Sprograma,@Stitle,@Scontent,@Sstate,@Simg,@Slink,@Stime)";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Sprograma", s.Sprograma, DbType.String);
+                paras.Add("@Stitle", s.Stitle, DbType.String);
+                paras.Add("@Scontent", s.Scontent, DbType.String);
+                paras.Add("@Sstate", s.Sstate, DbType.Int32);
+                paras.Add("@Simg", s.Simg, DbType.String);
+                paras.Add("@Slink", s.Slink, DbType.String);
+                paras.Add("@Stime", s.Stime, DbType.DateTime);
+                return conn.Execute(sql,paras);
             }
         }
         #endregion
