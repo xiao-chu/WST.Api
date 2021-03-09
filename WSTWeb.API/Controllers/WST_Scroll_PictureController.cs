@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WST.DAL;
 using WST.Model;
 using Microsoft.AspNetCore.Cors;
+using System.IO;
 
 namespace WSTWeb.API.Controllers
 {
@@ -41,6 +42,8 @@ namespace WSTWeb.API.Controllers
         {
             return dal.AddWST_Scroll_Picture(s);
         }
+
+       
 
         //删除
         [HttpDelete]

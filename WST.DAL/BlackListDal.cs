@@ -15,7 +15,7 @@ namespace WST.DAL
     public class BlackListDal
     {
         //连接数据库
-        private string strConn = "Data Source=GENTLEMAN\\SQLEXPRESS;Initial Catalog=WSTDb;Integrated Security=True";
+        private string strConn = "Data Source=.;Initial Catalog=WSTDb;Integrated Security=True";
         //显示黑名单
         public List<WST_BlackList> showBlack(int pageIndex, int pageSize, string Bunit, out int totalCount)
         {

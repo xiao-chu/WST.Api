@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ArticleDal.cs" />
     <Compile Include="LinkListDal.cs" />
+    <Compile Include="Md5Helper.cs" />
     <Compile Include="QuestionnaireDal.cs" />
     <Compile Include="BlackListDal.cs" />
     <Compile Include="ComplaintDal.cs" />

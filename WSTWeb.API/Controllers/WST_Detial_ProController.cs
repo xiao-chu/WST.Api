@@ -26,6 +26,15 @@ namespace WSTWeb.API.Controllers
             return Ok(new { data = data, code = 0, count = totalCount });
         }
 
+        //树类型
+        [HttpGet]
+        [Route("[action]")]
+        public ObjectResult GetTree(string dptitle)
+        {
+            List<WST_Detial_Pro> data = dal.GetTree(dptitle);
+            return Ok(new { data = data, code = 0 });
+        }
+
         //添加
         [HttpPost]
         public int AddWST_Detial_Pro(WST_Detial_Pro w)

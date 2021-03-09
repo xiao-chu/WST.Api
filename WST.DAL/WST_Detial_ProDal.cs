@@ -44,8 +44,18 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"update WST_Detial_Pro set Dtitle='{w.Dtitle}',Dptitle='{w.Dptitle}',UrlKey='{w.UrlKey}',Dsort='{w.Dsort}',Dstate='{w.Dstate}',Dtype='{w.Dtype}',Daddress='{w.Daddress}',Dexplain='{w.Dexplain}' where Did='{w.Did}'";
-                return conn.Execute(sql);
+                string sql = $"update WST_Detial_Pro set Dtitle=@Dtitle,Dptitle=@Dptitle,UrlKey=@UrlKey,Dsort=@Dsort,Dstate=@Dstate,Dtype=@Dtype,Daddress=@Daddress,Dexplain=@Dexplain where Did=@Did";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Did", w.Did, DbType.Int32);
+                paras.Add("@Dtitle", w.Dtitle, DbType.String);
+                paras.Add("@Dptitle", w.Dptitle, DbType.String);
+                paras.Add("@UrlKey", w.UrlKey, DbType.String);
+                paras.Add("@Dsort", w.Dsort, DbType.Int32);
+                paras.Add("@Dstate", w.Dstate, DbType.Int32);
+                paras.Add("@Dtype", w.Dtype, DbType.String);
+                paras.Add("@Daddress", w.Daddress, DbType.String);
+                paras.Add("@Dexplain", w.Dexplain, DbType.String);
+                return conn.Execute(sql, paras);
             }
         }
         #endregion
@@ -55,8 +65,10 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"delete from WST_Detial_Pro where Did='{Did}'";
-                return conn.Execute(sql);
+                string sql = $"delete from WST_Detial_Pro where Did=@Did";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Did", Did, DbType.Int32);
+                return conn.Execute(sql,paras);
             }
         }
         #endregion
@@ -66,8 +78,30 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"insert into WST_Detial_Pro values ('{w.Dtitle}','{w.Dptitle}','{w.UrlKey}','{w.Dsort}','{w.Dstate}','{w.Dtype}','{w.Daddress}','{w.Dexplain}')";
-                return conn.Execute(sql);
+                string sql = $"insert into WST_Detial_Pro values (@Dtitle,@Dptitle,@UrlKey,@Dsort,@Dstate,@Dtype,@Daddress,@Dexplain)";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Dtitle", w.Dtitle, DbType.String);
+                paras.Add("@Dptitle", w.Dptitle, DbType.String);
+                paras.Add("@UrlKey", w.UrlKey, DbType.String);
+                paras.Add("@Dsort", w.Dsort, DbType.Int32);
+                paras.Add("@Dstate", w.Dstate, DbType.Int32);
+                paras.Add("@Dtype", w.Dtype, DbType.String);
+                paras.Add("@Daddress", w.Daddress, DbType.String);
+                paras.Add("@Dexplain", w.Dexplain, DbType.String);
+                return conn.Execute(sql, paras);
+            }
+        }
+        #endregion
+
+        #region 树类型分类显示
+        public List<WST_Detial_Pro> GetTree(string dptitle)
+        {
+            using (IDbConnection conn=new SqlConnection(strConn))
+            {
+                string sql = $"select* from WST_Detial_Pro where Dptitle = @Dptitle";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Dptitle", dptitle, DbType.String);
+                return conn.Query<WST_Detial_Pro>(sql, paras).ToList();
             }
         }
         #endregion
