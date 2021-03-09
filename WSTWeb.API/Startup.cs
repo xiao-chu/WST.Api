@@ -85,9 +85,6 @@ namespace WSTWeb.API
 
             app.UseAuthorization();
 
-            //����Cors
-            app.UseCors("any");
-
             app.UseAuthorization();
 
 
