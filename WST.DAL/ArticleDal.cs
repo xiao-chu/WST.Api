@@ -53,8 +53,26 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string strSql = $"insert into WST_Article_management values('{w.ATId}','{w.Aname}',{w.Ranks},{w.Astatus},'{w.Tops}',{w.Recommend},{w.Audit_status},'{w.Release_time}','{w.Promulgator}',{w.Comment},'{w.Begin_time}','{w.End_time}','{w.AType}','{w.Jump_address}','{w.Picture}','{w.Accessory}')";
-                return conn.Execute(strSql);
+                string strSql = $"insert into WST_Article_management values(@ATId,@Aname,@Ranks,@Astatus,@Tops,@Recommend,@Audit_status,@Release_time,@Promulgator,@Comment,@Begin_time,@End_time,@AType,@Jump_address,@Picture,@Accessory,@Content)";
+                DynamicParameters dynamic = new DynamicParameters();
+                dynamic.Add("@ATId", w.ATId, DbType.Int32);
+                dynamic.Add("@Aname", w.Aname, DbType.String);
+                dynamic.Add("@Ranks", w.Ranks, DbType.Int32);
+                dynamic.Add("@Astatus", w.Astatus, DbType.Int32);
+                dynamic.Add("@Tops", w.Tops, DbType.String);
+                dynamic.Add("@Recommend", w.Recommend, DbType.Int32);
+                dynamic.Add("@Audit_status", w.Audit_status, DbType.Int32);
+                dynamic.Add("@Release_time", w.Release_time, DbType.DateTime);
+                dynamic.Add("@Promulgator", w.Promulgator, DbType.String);
+                dynamic.Add("@Comment", w.Comment, DbType.Int32);
+                dynamic.Add("@Begin_time", w.Begin_time, DbType.DateTime);
+                dynamic.Add("@End_time", w.End_time, DbType.DateTime);
+                dynamic.Add("@AType", w.AType, DbType.String);
+                dynamic.Add("@Jump_address", w.Jump_address, DbType.String);
+                dynamic.Add("@Picture", w.Picture, DbType.String);
+                dynamic.Add("@Accessory", w.Accessory, DbType.String);
+                dynamic.Add("@Content", w.Content, DbType.String);
+                return conn.Execute(strSql,dynamic);
             }
         }
 
@@ -63,8 +81,10 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string strSql = $"delete from WST_Article_management where Aid = {id}";
-                return conn.Execute(strSql);
+                string strSql = $"delete from WST_Article_management where Aid = @id";
+                DynamicParameters dynamic = new DynamicParameters();
+                dynamic.Add("@id",id,DbType.Int32);
+                return conn.Execute(strSql,dynamic);
             }
         }
 
@@ -82,10 +102,27 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string strSql = $"update WST_Article_management set ATId='{w.ATId}',Aname='{w.Aname}',Ranks='{w.Ranks}',Astatus='{w.Astatus}',Tops='{w.Tops}',Recommend='{w.Recommend}'," +
-                    $"Audit_status='{w.Audit_status}',Release_time='{w.Release_time}',Promulgator='{w.Promulgator}',Comment='{w.Comment}'," +
-                    $"Begin_time='{w.Begin_time}',End_time='{w.End_time}',AType='{w.AType}',Jump_address='{w.Jump_address}',Picture='{w.Picture}',Accessory='{w.Accessory}' where Aid={w.Aid}";
-                return conn.Execute(strSql);
+                string strSql = $"update WST_Article_management set ATId=@ATId,Aname=@Aname,Ranks=@Ranks,Astatus=@Astatus,Tops=@Tops,Recommend=@Recommend,Audit_status=@Audit_status,Release_time=@Release_time,Promulgator=@Promulgator,Comment=@Comment,Begin_time=@Begin_time,End_time=@End_time,AType=@AType,Jump_address=@Jump_address,Picture=@Picture,Accessory=@Accessory,Content=@Content where Aid=@Aid";
+                DynamicParameters dynamic = new DynamicParameters();
+                dynamic.Add("@ATId", w.ATId, DbType.Int32);
+                dynamic.Add("@Aname", w.Aname, DbType.String);
+                dynamic.Add("@Ranks", w.Ranks, DbType.Int32);
+                dynamic.Add("@Astatus", w.Astatus, DbType.Int32);
+                dynamic.Add("@Tops", w.Tops, DbType.String);
+                dynamic.Add("@Recommend", w.Recommend, DbType.Int32);
+                dynamic.Add("@Audit_status", w.Audit_status, DbType.Int32);
+                dynamic.Add("@Release_time", w.Release_time, DbType.DateTime);
+                dynamic.Add("@Promulgator", w.Promulgator, DbType.String);
+                dynamic.Add("@Comment", w.Comment, DbType.Int32);
+                dynamic.Add("@Begin_time", w.Begin_time, DbType.DateTime);
+                dynamic.Add("@End_time", w.End_time, DbType.DateTime);
+                dynamic.Add("@AType", w.AType, DbType.String);
+                dynamic.Add("@Jump_address", w.Jump_address, DbType.String);
+                dynamic.Add("@Picture", w.Picture, DbType.String);
+                dynamic.Add("@Accessory", w.Accessory, DbType.String);
+                dynamic.Add("@Content", w.Content, DbType.String);
+                dynamic.Add("@Aid", w.Aid, DbType.Int32);
+                return conn.Execute(strSql,dynamic);
             }
         }
     }
