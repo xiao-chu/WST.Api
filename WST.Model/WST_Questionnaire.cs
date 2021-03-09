@@ -20,5 +20,11 @@ namespace WST.Model
         public string  Qenddesc { get; set; }          //结尾描述
 
 
+        public string Etitle { get; set; }      //题目
+        public string Titem { get; set; }           //选项名称
+        public int Questiontypes { get; set; }         //类型
+        public int Tid { get; set; }               //PK
+        public int Eid { get; set; }               //PK
+
     }
 }
