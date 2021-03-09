@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WSTWeb.API
 {
-    public class Program
+    public class Programu
     {
         public static void Main(string[] args)
         {

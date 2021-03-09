@@ -15,7 +15,7 @@ namespace WST.DAL
     public class RecruitDal
     {
         //连接字符串
-        private const string strConn = "Data Source=GENTLEMAN\\SQLEXPRESS;Initial Catalog=WSTDb;Integrated Security=True";
+        private const string strConn = "Data Source=.;Initial Catalog=WSTDb;Integrated Security=True";
 
         //显示黑名单
         public List<WST_Recruit> showRecr(int pageIndex, int pageSize, string Rposition, out int totalCount)

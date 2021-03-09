@@ -19,7 +19,7 @@ namespace WSTWeb.API.Controllers
         ArticleDal dal = new ArticleDal();
         //分页显示
         [HttpGet]
-        public ObjectResult Index(int page = 1, int limit = 2, string Dtitle = "", string Aname = "", int Audit_status = -1)
+        public ObjectResult Index(int page = 1, int limit = 5, string Dtitle = "", string Aname = "", int Audit_status = -1)
         {
             int totalCount;
             var data = dal.GetArticle(page, limit, out totalCount, Dtitle, Aname, Audit_status);
@@ -46,7 +46,6 @@ namespace WSTWeb.API.Controllers
                 w.Release_time = DateTime.Now;  //审核时间
                 w.Comment = 1;         //是否评论
                 w.AType = "正常";
-                //Uopate(formFile, path);
                 var data = dal.AddArticle(w);
                 if (data > 0)
                 {
@@ -78,16 +77,5 @@ namespace WSTWeb.API.Controllers
             }
             return Ok(new { code = -1, msg = "修改失败" });
         }
-
-        //[HttpPost]
-        //[Route("[action]")]
-        //public ObjectResult Uopate(IFormFile formFile)
-        //{
-        //    if (formFile.Length>0&& formFile != null)
-        //    {
-        //        string filePath =Guid.NewGuid()+Path.GetExtension(formFile.FileName);
-
-        //    }
-        //}
     }
 }
