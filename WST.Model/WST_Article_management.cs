@@ -26,6 +26,7 @@ namespace WST.Model
         public string Jump_address { get; set; }   //跳转地址
         public string Picture { get; set; }    //图片
         public string Accessory { get; set; }   //附件
+        public string Content { get; set; }
 
         //
         public int Did { get; set; }          //  栏目内容表主键
