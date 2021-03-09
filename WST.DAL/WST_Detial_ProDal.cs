@@ -93,5 +93,18 @@ namespace WST.DAL
         }
         #endregion
 
+        #region 树类型分类显示
+        public List<WST_Detial_Pro> GetTree(string dptitle)
+        {
+            using (IDbConnection conn=new SqlConnection(strConn))
+            {
+                string sql = $"select* from WST_Detial_Pro where Dptitle = @Dptitle";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Dptitle", dptitle, DbType.String);
+                return conn.Query<WST_Detial_Pro>(sql, paras).ToList();
+            }
+        }
+        #endregion
+
     }
 }
