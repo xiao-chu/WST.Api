@@ -16,8 +16,6 @@ namespace WSTWeb.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("any")]//跨域
-    [Produces("applocation/json")]
-    [Consumes("application/json", "multipart/form-data")]//此处为新增
     public class LinkController : ControllerBase
     {
         //实例化DAL
