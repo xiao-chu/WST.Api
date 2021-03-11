@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 //引用
 using WST.Model;
 using WST.DAL;
+using System.Data;
+using System.Data.SqlClient;
+using System.Net;
 
 namespace WSTWeb.API.Controllers
 {

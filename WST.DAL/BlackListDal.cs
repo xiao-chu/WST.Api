@@ -15,7 +15,7 @@ namespace WST.DAL
     public class BlackListDal
     {
         //连接数据库
-        private string strConn = "Data Source=GENTLEMAN\\SQLEXPRESS;Initial Catalog=WSTDb;Integrated Security=True";
+        private string strConn = "Data Source=.;Initial Catalog=WSTDb;Integrated Security=True";
         //显示黑名单
         public List<WST_BlackList> showBlack(int pageIndex, int pageSize, string Bunit, out int totalCount)
         {
@@ -45,14 +45,6 @@ namespace WST.DAL
         {
             using (IDbConnection conn=new SqlConnection(strConn))
             {
-                string sql = $"insert into WST_BlackList values(@Btype,@Bunit,@Bnumber,@Bmatter,@Bstate,getdate(),'超级管理员')";
-                DynamicParameters paras = new DynamicParameters();
-                paras.Add("@Btype", b.Btype, DbType.String);
-                paras.Add("@Bunit", b.Bunit, DbType.String);
-                paras.Add("@Bnumber", b.Bnumber, DbType.String);
-                paras.Add("@Bmatter", b.Bmatter, DbType.String);
-                paras.Add("@Bstate", b.Bstate, DbType.Int32);
-                return conn.Execute(sql,paras);
             }
         }
 
@@ -61,10 +53,6 @@ namespace WST.DAL
         {
             using (IDbConnection conn=new SqlConnection(strConn))
             {
-                string sql = $"delete from WST_BlackList where Bid=@Bid";
-                DynamicParameters paras = new DynamicParameters();
-                paras.Add("@Bid", Bid, DbType.Int32);
-                return conn.Execute(sql,paras);
             }
         }
 
@@ -73,15 +61,6 @@ namespace WST.DAL
         {
             using (IDbConnection conn=new SqlConnection(strConn))
             {
-                string sql = $"update WST_BlackList set Btype=@Btype,Bunit=@Bunit,Bnumber=@Bnumber,Bmatter=@Bmatter,Bstate=@Bstate,Btime=getdate() where Bid=@Bid";
-                DynamicParameters paras = new DynamicParameters();
-                paras.Add("@Btype", b.Btype, DbType.String);
-                paras.Add("@Bunit", b.Bunit, DbType.String);
-                paras.Add("@Bnumber", b.Bnumber, DbType.String);
-                paras.Add("@Bmatter", b.Bmatter, DbType.String);
-                paras.Add("@Bstate", b.Bstate, DbType.Int32);
-                paras.Add("@Bid", b.Bid, DbType.Int32);
-                return conn.Execute(sql,paras);
             }
         }
 

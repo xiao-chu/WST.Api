@@ -16,7 +16,7 @@ namespace WST.DAL
     public class ComplaintDal
     {
         //连接字符串
-        private const string strConn = "Data Source=GENTLEMAN\\SQLEXPRESS;Initial Catalog=WSTDb;Integrated Security=True";
+        private const string strConn = "Data Source=.;Initial Catalog=WSTDb;Integrated Security=True";
 
         //显示
         public List<WST_Complaint> showComp(string Cbyname)
@@ -72,6 +72,8 @@ namespace WST.DAL
             {
                 throw;
             }
+
+
         }
 
         //修改
