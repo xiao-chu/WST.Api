@@ -46,12 +46,12 @@ namespace WSTWeb.API.Controllers
             return dal.addRecr(r);
         }
 
-        //查看
+        //前台显示查看
         [HttpGet]
         [Route("getOne")]
-        public ObjectResult lookRecr(int Rid=0)
+        public ObjectResult lookRecr(string Rkind="社会招聘")
         {
-            WST_Recruit data = dal.lookRecr(Rid);
+            List<WST_Recruit> data = dal.lookRecr(Rkind);
             return Ok(new { data = data });
         }
 

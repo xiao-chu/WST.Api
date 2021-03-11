@@ -63,5 +63,12 @@ namespace WSTWeb.API.Controllers
             WST_BlackList data = dal.lookBlack(Bid);
             return Ok(new { data=data,code=0});
         }
+        //查询
+        [HttpGet]
+        [Route("getCha")]
+        public int chaHmd(string Bunit="", string Bnumber="")
+        {
+            return dal.chaHmd(Bunit,Bnumber);
+        }
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="WST_Exam_Tel.cs" />
     <Compile Include="WST_Jurisdiction.cs" />
     <Compile Include="WST_LinkList.cs" />
+    <Compile Include="WST_Recruit.cs" />
     <Compile Include="WST_Questionnaire.cs" />
     <Compile Include="WST_Recruit.cs" />
     <Compile Include="WST_Role.cs" />

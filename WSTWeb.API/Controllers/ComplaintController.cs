@@ -50,5 +50,20 @@ namespace WSTWeb.API.Controllers
             WST_Complaint data = dal.lookComp(Cid);
             return Ok(new { data=data,code=0});
         }
+
+        //添加实名
+        [HttpPost]
+        public int addShiComp(WST_Complaint c)
+        {
+            return dal.addShiComp(c);
+        }
+
+        //添加匿名
+        [HttpPost]
+        [Route("getTwo")]
+        public int addNiComp(WST_Complaint c)
+        {
+            return dal.addNiComp(c);
+        }
     }
 }

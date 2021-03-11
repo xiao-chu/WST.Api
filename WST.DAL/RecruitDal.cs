@@ -15,7 +15,7 @@ namespace WST.DAL
     public class RecruitDal
     {
         //连接字符串
-        private const string strConn = "Data Source=.;Initial Catalog=WSTDb;Integrated Security=True";
+        private const string strConn = "Data Source=GENTLEMAN\\SQLEXPRESS;Initial Catalog=WSTDb;Integrated Security=True";
 
         //显示黑名单
         public List<WST_Recruit> showRecr(int pageIndex, int pageSize, string Rposition, out int totalCount)
@@ -45,8 +45,16 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"insert into WST_Recruit values('{r.Rkind}','{r.Rposition}','{r.Rdescribe}','{r.Raddress}','{r.Rcompany}',{r.Rstate},getdate(),'超级管理员')";
-                return conn.Execute(sql);
+                string sql = $"insert into WST_Recruit values(@Rkind,@Rposition,@Rdescribe,@Raddress,@Rcompany,@Rstate,getdate(),'超级管理员')";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Rkind",r.Rkind,DbType.String);
+                paras.Add("@Rposition", r.Rposition, DbType.String);
+                paras.Add("@Rdescribe", r.Rdescribe, DbType.String);
+                paras.Add("@Raddress", r.Raddress, DbType.String);
+                paras.Add("@Rcompany", r.Rcompany, DbType.String);
+                paras.Add("@Rstate", r.Rstate, DbType.Int32);
+                return conn.Execute(sql,paras);
+
             }
         }
 
@@ -55,8 +63,10 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"delete from WST_Recruit where Rid={Rid}";
-                return conn.Execute(sql);
+                string sql = $"delete from WST_Recruit where Rid=@Rid";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Rid",Rid, DbType.Int32);
+                return conn.Execute(sql,paras);
             }
         }
 
@@ -65,18 +75,28 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"update WST_Recruit set Rkind='{r.Rkind}',Rposition='{r.Rposition}',Rdescribe='{r.Rdescribe}',Raddress='{r.Raddress}',Rcompany='{r.Rcompany}',Rstate={r.Rstate},Rtime=getdate(),Rpeople='超级管理员' where Rid={r.Rid}";
-                return conn.Execute(sql);
+                string sql = $"update WST_Recruit set Rkind=@Rkind,Rposition=@Rposition,Rdescribe=@Rdescribe,Raddress=@Raddress,Rcompany=@Rcompany,Rstate=@Rstate,Rtime=getdate(),Rpeople='超级管理员' where Rid=@Rid";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Rkind", r.Rkind, DbType.String);
+                paras.Add("@Rposition", r.Rposition, DbType.String);
+                paras.Add("@Rdescribe", r.Rdescribe, DbType.String);
+                paras.Add("@Raddress", r.Raddress, DbType.String);
+                paras.Add("@Rcompany", r.Rcompany, DbType.String);
+                paras.Add("@Rstate", r.Rstate, DbType.Int32);
+                paras.Add("@Rid", r.Rid, DbType.Int32);
+                return conn.Execute(sql,paras);
             }
         }
 
-        //查看
-        public WST_Recruit lookRecr(int Bid)
+        //前台显示查看
+        public List<WST_Recruit> lookRecr(string Rkind)
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"select * from WST_Recruit where Rid={Bid}";
-                return conn.Query<WST_Recruit>(sql).SingleOrDefault();
+                string sql = $"select top(2) * from WST_Recruit where Rkind=@Rkind";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Rkind", Rkind, DbType.String);
+                return conn.Query<WST_Recruit>(sql,paras).ToList();
             }
         }
     }

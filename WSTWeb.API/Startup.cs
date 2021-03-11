@@ -28,9 +28,21 @@ namespace WSTWeb.API
         [Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
-            //依赖注入
+            //添加cors 服务 配置跨域处理            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("any", builder =>
+                {
+                    builder.WithOrigins("http://localhost:51813")//只允许https://localhost:5000来源允许跨域
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+
+                });
+            });
+
             services.AddSingleton<BlackListDal>();
-            services.AddSingleton<UserDal>();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -68,9 +80,7 @@ namespace WSTWeb.API
             }
 
             app.UseRouting();
-            //����Cors
             app.UseCors("any");
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

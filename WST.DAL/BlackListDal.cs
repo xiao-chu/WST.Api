@@ -45,8 +45,6 @@ namespace WST.DAL
         {
             using (IDbConnection conn=new SqlConnection(strConn))
             {
-                string sql = $"insert into WST_BlackList values('{b.Btype}','{b.Bunit}','{b.Bnumber}','{b.Bmatter}','{b.Bstate}',getdate(),'超级管理员')";
-                return conn.Execute(sql);
             }
         }
 
@@ -55,8 +53,6 @@ namespace WST.DAL
         {
             using (IDbConnection conn=new SqlConnection(strConn))
             {
-                string sql = $"delete from WST_BlackList where Bid={Bid}";
-                return conn.Execute(sql);
             }
         }
 
@@ -65,8 +61,6 @@ namespace WST.DAL
         {
             using (IDbConnection conn=new SqlConnection(strConn))
             {
-                string sql = $"update WST_BlackList set Btype='{b.Btype}',Bunit='{b.Bunit}',Bnumber='{b.Bnumber}',Bmatter='{b.Bmatter}',Bstate='{b.Bstate}',Btime=getdate() where Bid={b.Bid}";
-                return conn.Execute(sql);
             }
         }
 
@@ -77,6 +71,29 @@ namespace WST.DAL
             {
                 string sql = $"select * from WST_BlackList where Bid={Bid}";
                 return conn.Query<WST_BlackList>(sql).SingleOrDefault();
+            }
+        }
+
+
+        //查询
+        public int chaHmd(string Bunit,string Bnumber)
+        {
+            using (IDbConnection conn=new SqlConnection(strConn))
+            {
+                string sql = "select count(*) from WST_BlackList where 1=1 ";
+                if (Bunit != "")
+                {
+                    sql += $" and Bunit = @Bunit";
+                }
+                if (Bnumber != "")
+                {
+                    sql += $" and Bnumber = @Bnumber";
+                }
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Bunit",Bunit,DbType.String);
+                paras.Add("@Bnumber", Bnumber, DbType.String);
+
+                return conn.ExecuteScalar<int>(sql,paras);
             }
         }
     }

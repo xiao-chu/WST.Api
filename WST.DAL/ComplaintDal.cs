@@ -37,8 +37,10 @@ namespace WST.DAL
         {
             using (IDbConnection conn=new SqlConnection(strConn))
             {
-                string sql = $"delete from WST_Complaint where Cid={Cid}";
-                return conn.Execute(sql);
+                string sql = $"delete from WST_Complaint where Cid=@Cid";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Cid",Cid,DbType.Int32);
+                return conn.Execute(sql,paras);
             }
         }
 
@@ -85,8 +87,17 @@ namespace WST.DAL
                 int value = rad.Next(1000, 10000);//用rad生成大于等于1000，小于等于9999的随机数
                 var sjshu = value.ToString(); //产生的四位随机数
 
-                string sql = $"update WST_Complaint set Cnumber='{bianhao+sjshu}',Ctype={c.Ctype},Cinformation='{c.Cinformation}',Cbyname='{c.Cbyname}',Cphone='{c.Cphone}',Cweixin='{c.Cweixin}',Ceamil='{c.Ceamil}',Cip='{GetLocalIP()}',Cisfujian=1,Cstate={c.Cisfujian},Ctime=getdate(),Cpeople='超级管理员',Cname='德玛',Cfujian='2131' where Cid={c.Cid}";
-                return conn.Execute(sql);
+                string sql = $"update WST_Complaint set Cnumber='{bianhao+sjshu}',Ctype=@Ctype,Cinformation=@Cinformation,Cbyname=@Cbyname,Cphone=@Cphone,Cweixin=@Cweixin,Ceamil=@Ceamil,Cip='{GetLocalIP()}',Cisfujian=1,Cstate=@Cstate,Ctime=getdate(),Cpeople='超级管理员',Cname='德玛',Cfujian='2131' where Cid=@Cid";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Ctype", c.Ctype, DbType.Int32);
+                paras.Add("@Cinformation", c.Cinformation, DbType.String);
+                paras.Add("@Cbyname", c.Cbyname, DbType.String);
+                paras.Add("@Cphone", c.Cphone, DbType.String);
+                paras.Add("@Cweixin", c.Cweixin, DbType.String);
+                paras.Add("@Ceamil", c.Ceamil, DbType.String);
+                paras.Add("@Cstate", c.Cstate, DbType.Int32);
+                paras.Add("@Cid", c.Cid, DbType.Int32);
+                return conn.Execute(sql,paras);
             }
         }
 
@@ -95,9 +106,76 @@ namespace WST.DAL
         {
             using (IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"select * from WST_Complaint where Cid={Cid}";
-                return conn.Query<WST_Complaint>(sql).SingleOrDefault();
+                string sql = $"select * from WST_Complaint where Cid=@Cid";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Cid", Cid, DbType.Int32);
+                return conn.Query<WST_Complaint>(sql,paras).SingleOrDefault();
             }
         }
+
+        //实名举报添加
+        public int addShiComp(WST_Complaint c)
+        {
+            //生成编号
+            string bianhao = DateTime.Now.ToString("yyyyMMdd");
+            Random rad = new Random();//实例化随机数产生器rad
+            int value = rad.Next(1000, 10000);//用rad生成大于等于1000，小于等于9999的随机数
+            var sjshu = value.ToString(); //产生的四位随机数
+            if (!string.IsNullOrEmpty(c.Cfujian))
+            {
+                c.Cisfujian = 1;
+            }
+            else
+            {
+                c.Cisfujian = 0;
+            }
+
+            using (IDbConnection conn=new SqlConnection(strConn))
+            {
+                string sql = $"insert into WST_Complaint values('{bianhao+sjshu}',1,@Cinformation,@Cbyname,@Cphone,@Cweixin,@Ceamil,'{GetLocalIP()}',@Cisfujian,0,getdate(),'管理员','德玛西亚',@Cfujian)";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Cinformation", c.Cinformation, DbType.String);
+                paras.Add("@Cbyname", c.Cbyname, DbType.String);
+                paras.Add("@Cphone", c.Cphone, DbType.String);
+                paras.Add("@Cweixin", c.Cweixin, DbType.String);
+                paras.Add("@Ceamil", c.Ceamil, DbType.String);
+                paras.Add("@Cisfujian", c.Cisfujian, DbType.Int32);
+                paras.Add("@Cfujian", c.Cfujian, DbType.String);
+                return conn.Execute(sql,paras);
+            }
+        }
+
+        //匿名举报添加
+        public int addNiComp(WST_Complaint c)
+        {
+            //生成编号
+            string bianhao = DateTime.Now.ToString("yyyyMMdd");
+            Random rad = new Random();//实例化随机数产生器rad
+            int value = rad.Next(1000, 10000);//用rad生成大于等于1000，小于等于9999的随机数
+            var sjshu = value.ToString(); //产生的四位随机数
+            if (!string.IsNullOrEmpty(c.Cfujian))
+            {
+                c.Cisfujian = 1;
+            }
+            else
+            {
+                c.Cisfujian = 0;
+            }
+
+            using (IDbConnection conn = new SqlConnection(strConn))
+            {
+                string sql = $"insert into WST_Complaint values('{bianhao + sjshu}',0,@Cinformation,@Cbyname,@Cphone,@Cweixin,@Ceamil,'{GetLocalIP()}',@Cisfujian,0,getdate(),'管理员','德玛西亚',@Cfujian)";
+                DynamicParameters paras = new DynamicParameters();
+                paras.Add("@Cinformation", c.Cinformation, DbType.String);
+                paras.Add("@Cbyname", c.Cbyname, DbType.String);
+                paras.Add("@Cphone", c.Cphone, DbType.String);
+                paras.Add("@Cweixin", c.Cweixin, DbType.String);
+                paras.Add("@Ceamil", c.Ceamil, DbType.String);
+                paras.Add("@Cisfujian", c.Cisfujian, DbType.Int32);
+                paras.Add("@Cfujian", c.Cfujian, DbType.String);
+                return conn.Execute(sql, paras);
+            }
+        }
+
     }
 }
