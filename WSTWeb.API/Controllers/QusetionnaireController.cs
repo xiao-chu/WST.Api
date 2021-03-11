@@ -12,8 +12,6 @@ using Microsoft.AspNetCore.Cors;
 namespace WSTWeb.API.Controllers
 {
 
-
-     
     [Route("api/[controller]")]
     [EnableCors("any")]
     [ApiController]

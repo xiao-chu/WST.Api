@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="BlackListDal.cs" />
     <Compile Include="ComplaintDal.cs" />
+    <Compile Include="QuestionnaireDal.cs" />
     <Compile Include="RecruitDal.cs" />
     <Compile Include="UserDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
