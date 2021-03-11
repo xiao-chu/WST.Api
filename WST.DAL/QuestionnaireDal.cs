@@ -128,7 +128,7 @@ namespace WST.DAL
         {
             using(IDbConnection conn = new SqlConnection(strConn))
             {
-                string sql = $"select * from WST_Exam";
+                string sql = $"select * from WST_Questionnaire join WST_Exam on WST_Questionnaire.Qid = WST_Exam.Qid where WST_Questionnaire.Qstate=1";
                 List<WST_Exam> list = conn.Query<WST_Exam>(sql).ToList();
                 return list;
             }
@@ -149,7 +149,7 @@ namespace WST.DAL
         {
             MailMessage msg = new MailMessage();
 
-            msg.To.Add("3169190453@qq.com");//收件人地址 
+            msg.To.Add("3501357909@qq.com");//收件人地址 
             msg.CC.Add("3501357909@qq.com");//抄送人地址 
 
             msg.From = new MailAddress("3169190453@qq.com", "小鬼");//发件人邮箱，名称 
