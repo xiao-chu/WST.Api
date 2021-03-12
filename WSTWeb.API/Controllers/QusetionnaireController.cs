@@ -77,9 +77,9 @@ namespace WSTWeb.API.Controllers
         //邮箱推送
         [Route("[action]")]
         [HttpGet]
-        public bool SendEmail(int qid)
+        public bool SendEmail(string Email)
         {
-            return dal.SendEmail(qid);
+            return dal.SendEmail(Email);
         }
 
         //题目查询

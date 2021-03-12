@@ -145,27 +145,19 @@ namespace WST.DAL
             }
         }
         //邮箱推送
-        public bool SendEmail(int qid)
+        public bool SendEmail(string Email)
         {
             MailMessage msg = new MailMessage();
 
-            msg.To.Add("3501357909@qq.com");//收件人地址 
+            msg.To.Add(Email);//收件人地址 
             msg.CC.Add("3501357909@qq.com");//抄送人地址 
 
-            msg.From = new MailAddress("3169190453@qq.com", "小鬼");//发件人邮箱，名称 
+            msg.From = new MailAddress("3169190453@qq.com", "你爹");//发件人邮箱，名称 
 
             msg.Subject = "邮箱测试";//邮件标题 
             msg.SubjectEncoding = Encoding.UTF8;//标题格式为UTF8 
 
-            IDbConnection conn = new SqlConnection(strConn);           
-            string sql = $"select * from WST_Questionnaire where Qid=@qid";
-            DynamicParameters paras = new DynamicParameters();
-            paras.Add("@qid", qid, DbType.Int32);
-            List<WST_Questionnaire> list = conn.Query<WST_Questionnaire>(sql,paras).ToList();
-            //转换格式
-            //string data = JsonConvert.SerializeObject(list);
-
-            msg.Body = list.ToString(); //邮件内容 
+            msg.Body = "http://localhost:51813/Admin/Questionnaire/QuestionnaireShow"; //邮件内容 
             msg.BodyEncoding = Encoding.UTF8;//内容格式为UTF8 
           
           

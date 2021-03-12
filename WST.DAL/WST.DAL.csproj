@@ -49,8 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArticleDal.cs" />
     <Compile Include="BlackListDal.cs" />
     <Compile Include="ComplaintDal.cs" />
+    <Compile Include="LinkListDal.cs" />
+    <Compile Include="Md5Helper.cs" />
     <Compile Include="QuestionnaireDal.cs" />
     <Compile Include="RecruitDal.cs" />
     <Compile Include="UserDal.cs" />
