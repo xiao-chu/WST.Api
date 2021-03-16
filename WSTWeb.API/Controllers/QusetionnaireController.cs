@@ -8,6 +8,7 @@ using WST.DAL;
 using WST.Model;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.Extensions.Logging;
 
 namespace WSTWeb.API.Controllers
 {
@@ -19,7 +20,14 @@ namespace WSTWeb.API.Controllers
     {
         //实例化DAL
         QuestionnaireDal dal = new QuestionnaireDal();
-        
+
+        //使用日志
+        private readonly ILogger<QusetionnaireController> _logger;
+        public QusetionnaireController(ILogger<QusetionnaireController> logger)
+        {
+            _logger = logger;
+        }
+
         [HttpGet]
         public ObjectResult Get(int page = 1, int limit = 3, string Qnumber = null)
         {
@@ -79,6 +87,10 @@ namespace WSTWeb.API.Controllers
         [HttpGet]
         public bool SendEmail(string Email)
         {
+            //_logger.LogError("这是错误信息");
+            //_logger.LogDebug("这是调试信息");
+            _logger.LogInformation("邮箱推送成功");
+
             return dal.SendEmail(Email);
         }
 
@@ -102,6 +114,9 @@ namespace WSTWeb.API.Controllers
         [Route("[action]")]
         public int Addanswer(WST_Answer a)
         {
+            //_logger.LogError("这是错误信息");
+            //_logger.LogDebug("这是调试信息");
+            _logger.LogInformation("问题提交成功");
             return dal.Addanswer(a);
         }
 

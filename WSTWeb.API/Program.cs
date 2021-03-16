@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NLog.Web.AspNetCore;
+using NLog.Web;
 
 namespace WSTWeb.API
 {
@@ -13,6 +15,8 @@ namespace WSTWeb.API
     {
         public static void Main(string[] args)
         {
+            // 设置读取指定位置的nlog.config文件
+            NLogBuilder.ConfigureNLog("NLog/nlog.config");
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -21,6 +25,8 @@ namespace WSTWeb.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                 // 配置使用NLog
+                .UseNLog();
     }
 }
